@@ -215,16 +215,16 @@ const TourModal = (props) => {
 
             </Form.Group>
 
-                {/* <Form.Group className="mb-3 text-center">
+                <Form.Group className="mb-3 text-center">
                   
                     {
-                        tour?.images.map((image) => {
+                        tour.images && tour?.images.map((image) => {
                           
-                                 <img src={image.url} width={150}></img>
+                          return(<img src={image?.url} width={100} className='m-2'></img>)
                           
                         })
                     }
-                </Form.Group> */}
+                </Form.Group>
         
         </Modal.Body>
         <Modal.Footer>
