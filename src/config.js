@@ -1,3 +1,3 @@
 module.exports = {
-    API_URL:"https://tour-and-place-server-app.vercel.app"
+    API_URL:"http://128.199.215.204:3000"
 }
