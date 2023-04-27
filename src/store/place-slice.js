@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios'
 import { API_URL } from '../config';
+import { tourAction } from './tour-slice';
 
 const placeSlice = createSlice({
   name: 'place',
@@ -43,6 +44,12 @@ export const deletePlace = (id) => {
     }
     await deleteData();
     dispatch(fetchPlaces());
+    
+    dispatch(tourAction.setNotification({
+      "message":"Deleted tour successfully.",
+      "variant":"danger"
+    }))
+
   }
 }
 
@@ -80,11 +87,19 @@ export const updatePlace = (place) => {
       let response = await update();
       if(place.id){
         dispatch(placeAction.setPlaces(response))
+        dispatch(tourAction.setNotification({
+          "message":"Updated tour successfully.",
+          "variant":"primary"
+        }))
       }
         
       else{
         dispatch(placeAction.addPlace(response));
         dispatch(placeAction.setPlaceId(response.place.id))
+        dispatch(tourAction.setNotification({
+          "message":"Created new tour successfully.",
+          "variant":"primary"
+        }))
       } 
         
 

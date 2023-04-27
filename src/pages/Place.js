@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { AiFillCheckCircle } from "react-icons/ai";
 import DataTable from 'react-data-table-component';
 import AlertWarningModal from "../components/AlertWarningModal";
+import Notification from "../components/Notification"
 
 const Place = () => {
     const dispatch = useDispatch();
@@ -15,7 +16,8 @@ const Place = () => {
     const [place,setPlace] = useState({});
     const [columns,setColumns] = useState();
     const [showAlert,setShowAlert] = useState(false)
-
+    const notification = useSelector((state) => state.tour.notification)
+    
     useEffect(() => {
         dispatch(fetchPlaces())
         setColumns([
@@ -79,6 +81,13 @@ const Place = () => {
 
     return (
         <div className="container">
+        { notification.message && 
+        <Notification
+            message={notification.message}
+            variant={notification.variant}
+        >
+        </Notification>}
+        
           <h2 className="text-primary">
             Places
             <a className="m-2 btn btn-success" onClick={ () => showPlaceModal({})}>Add new</a>

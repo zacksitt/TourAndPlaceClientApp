@@ -8,6 +8,7 @@ const tourSlice = createSlice({
     tours: [],
     placeOptions:[],
     tour_id:0,
+    notification:{}
   },
   reducers: {
     setPlaceOptions(state,action){
@@ -22,6 +23,9 @@ const tourSlice = createSlice({
     },
     setTourId(state,action){
       state.tour_id = action.payload;
+    },
+    setNotification(state,action){
+      state.notification = action.payload;
     }
   }
 })
@@ -45,6 +49,11 @@ export const deleteTour = (id) => {
     }
     await deleteData();
     dispatch(fetchTours());
+    dispatch(tourAction.setNotification({
+      "message":"Deleted tour successfully.",
+      "variant":"danger"
+    }))
+
   }
 }
 export const fetchPlaceOptions = () => {
@@ -132,9 +141,20 @@ export const updateTour = (tour) => {
       dispatch(fetchTours())
       if(!tour.id){
         dispatch(tourAction.setTourId(response.tour.id))
+        dispatch(tourAction.setNotification({
+          "message":"Created new tour successfully.",
+          "variant":"primary"
+        }))
+      }else{
+        dispatch(tourAction.setNotification({
+          "message":"Updated tour successfully.",
+          "variant":"primary"
+        }))
       }
+
   }
 }
+
 export const tourAction = tourSlice.actions;
 
 export default tourSlice;

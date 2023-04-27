@@ -9,6 +9,7 @@ import DataTable from 'react-data-table-component';
 import AlertWarningModal from "../components/AlertWarningModal";
 import { fetchPlaces } from "../store/place-slice";
 import ItinearyModal from "../components/ItinearyModal";
+import Notification from '../components/Notification'
 
 const Tour = () => {
 
@@ -21,6 +22,7 @@ const Tour = () => {
     const places = useSelector((state) => state.place.places)
     const [placeOptions,setPlaceOptions] = useState();
     const [isShowedItinearyModal,setIsShowItinearyModal] = useState(false);
+    const notification = useSelector((state) => state.tour.notification)
 
     useEffect(() => {
         setPlaceOptions(getPlaceOptions(places))
@@ -113,6 +115,13 @@ const Tour = () => {
 
     return (
         <div className="container">
+
+          { notification.message && 
+            <Notification
+                message={notification.message}
+                variant={notification.variant}
+            >
+            </Notification>}
           <h2 className="text-primary">
             Tours
             <a className="m-2 btn btn-success" onClick={ () => showTourModal({})}>Add new</a>
