@@ -1,3 +1,3 @@
 module.exports = {
-    API_URL:"http://testapi.readsnote.com"
+    API_URL:"https://testapi.readsnote.com"
 }
