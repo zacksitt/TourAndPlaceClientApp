@@ -8,6 +8,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import DataTable from 'react-data-table-component';
 import AlertWarningModal from "../components/AlertWarningModal";
 import { fetchPlaces } from "../store/place-slice";
+import ItinearyModal from "../components/ItinearyModal";
 
 const Tour = () => {
 
@@ -19,6 +20,7 @@ const Tour = () => {
     const [showAlert,setShowAlert] = useState(false)
     const places = useSelector((state) => state.place.places)
     const [placeOptions,setPlaceOptions] = useState();
+    const [isShowedItinearyModal,setIsShowItinearyModal] = useState(false);
 
     useEffect(() => {
         setPlaceOptions(getPlaceOptions(places))
@@ -31,28 +33,35 @@ const Tour = () => {
         setColumns([
             {
                 name: 'Cover',
+                width:'15%',
                 selector: row => <img width="75px" alt={row.name} src={row.cover_url} className="p-2"/>,
             },
             {
                 name: 'Slug',
+                width:'15%',
                 selector: row => row.slug,
             },
             {
               name: 'Name',
+              width:'15%',
               selector: row => row.name,
             },
             {
                 name: 'Place',
+                width:'15%',
                 selector: row => row.place,
             },
             {
                 name: 'Price',
+                width:'10%',
                 selector: row => row.price,
             },
             ,{
                 name:'',
-                selector: row => <div> <a className="btn btn-primary mx-auto ml-2" onClick={ () => showTourModal(row)}>Edit</a> 
-                                        <a className="btn btn-danger" onClick={() => showWarningAlert(row)}>Delete</a>
+                width:'30%',
+                selector: row => <div> <a className="btn btn-primary m-1" onClick={ () => showTourModal(row)}>Edit</a> 
+                                        <a className="btn btn-danger m-1" onClick={() => showWarningAlert(row)}>Delete</a>
+                                        <a className="btn btn-warning m-1" onClick={() => showItinearyModal(row)}>Edit Itineary</a>
                                  </div>
             }
         ])
@@ -94,6 +103,13 @@ const Tour = () => {
         dispatch(deleteTour(tourid))
         setShowAlert(false);
     }
+    const showItinearyModal = (row) => {
+        setTour(row);
+        setIsShowItinearyModal(true);
+    }
+    const hideItinearyModal = () => {
+        setIsShowItinearyModal(false);
+    }
 
     return (
         <div className="container">
@@ -110,6 +126,7 @@ const Tour = () => {
           
           <TourModal show={showModal} hideTourModal={hideTourModal} tour={tour} placeOptions={placeOptions}></TourModal>
           <AlertWarningModal show={showAlert} hideWarningAlert={hideWarningAlert} confirmDelete={confirmDelete} data={tour}></AlertWarningModal>
+          <ItinearyModal show={isShowedItinearyModal} hideItinearyModal={hideItinearyModal} itinearies={tour.itineary} tourId={tour.id}></ItinearyModal>
 
         </div>
       );

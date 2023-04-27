@@ -17,6 +17,7 @@ const TourModal = (props) => {
   const tour_id = useSelector(state => state.tour.tour_id);
   const [place,setPlace] = useState('');
 
+
   const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchPlaces())
@@ -64,6 +65,8 @@ const TourModal = (props) => {
             [name]: value
         }));
     };
+
+
 
     const handleSubmit = (e) => {
 
@@ -167,11 +170,6 @@ const TourModal = (props) => {
             </Form.Group>
             
             <Form.Group className="mb-3">
-                <Form.Label>Itineary</Form.Label>
-                <Form.Control as="textarea" rows={3}  name="itineary" value={tour?.itineary || ''}  onChange={(e) => handleChange(e)} required/>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control  as="textarea" rows={3}  name="description" value={tour.description || ''}  onChange={(e) => handleChange(e)} required/>
             </Form.Group>
@@ -215,16 +213,16 @@ const TourModal = (props) => {
 
             </Form.Group>
 
-                <Form.Group className="mb-3 text-center">
-                  
-                    {
-                        tour.images && tour?.images.map((image) => {
-                          
-                          return(<img src={image?.url} width={100} className='m-2'></img>)
-                          
-                        })
-                    }
-                </Form.Group>
+            <Form.Group className="mb-3 text-center">
+              
+                {
+                    tour.images && tour?.images.map((image) => {
+                      
+                              return(<img src={image?.url} width={100} className='m-2'></img>)
+                      
+                    })
+                }
+            </Form.Group>
         
         </Modal.Body>
         <Modal.Footer>
